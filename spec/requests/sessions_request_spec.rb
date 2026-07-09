@@ -50,9 +50,10 @@ RSpec.describe SessionsController, type: :request do
 
             post '/sessions', params: session_params
             expect(response.status).to eq 422
-            expect(JSON.parse(response.body)['date']).to include('Date can\'t be blank')
-            expect(JSON.parse(response.body)['gym_name']).to include('Gym name is too long (maximum is 50 characters)')
-            expect(JSON.parse(response.body)['notes']).to include('Notes is too long (maximum is 255 characters)')
+            errors = JSON.parse(response.body)['errors']
+            expect(errors['date']).to include('Date can\'t be blank')
+            expect(errors['gym_name']).to include('Gym name is too long (maximum is 50 characters)')
+            expect(errors['notes']).to include('Notes is too long (maximum is 255 characters)')
         end
     end
 end

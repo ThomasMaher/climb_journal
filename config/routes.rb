@@ -8,5 +8,5 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "sessions#index"
 
-  resources :sessions, only: [:index, :show, :create]
+  resources :sessions, only: [:index, :show, :create, :destroy]
 end

@@ -17,8 +17,16 @@ class SessionsController < ApplicationController
         if session.save
             render json: session
         else
-            render json: session.errors.as_json(full_messages: true), status: :unprocessable_entity
+            render json: { errors: session.errors.as_json(full_messages: true) }, status: :unprocessable_entity
         end
+    end
+
+    def destroy
+        session = Session.find_by(id: params[:id])
+        render status: :not_found and return unless session.present?
+
+        success = session.destroy ? true : false
+        render json: { success: success }, status: success ? :ok : :unprocessable_entity
     end
 
 

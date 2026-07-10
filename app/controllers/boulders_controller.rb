@@ -36,9 +36,7 @@ class BouldersController < ApplicationController
       :self_grade,
       :rating,
       :notes,
-      :incline,
-      :indoor,
-      :outdoor,
+      :boulder_type,
       :kilter_board,
       :nickname
     )

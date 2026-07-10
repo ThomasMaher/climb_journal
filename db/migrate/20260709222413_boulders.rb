@@ -9,10 +9,7 @@ class Boulders < ActiveRecord::Migration[8.0]
       t.integer :rating, index: true, null: true
       t.text :notes, limit: 400, null: true
 
-      t.boolean :indoor, default: 0, index: true
-      t.boolean :outdoor, default: 0, index: true
-      t.boolean :kilter_board, default: 0, index: true
-
+      t.string :boulder_type, index: true, null: true
       t.string :nickname, limit: 50, index: true, null: true
 
       t.timestamps

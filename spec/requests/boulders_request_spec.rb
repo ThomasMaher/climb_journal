@@ -7,7 +7,7 @@ RSpec.describe BouldersController, type: :request do
         vgrade_range_min: 2,
         vgrade_range_max: 3,
         self_grade: 3,
-        indoor: true,
+        boulder_type: 'Indoor',
         nickname: 'Tracy'
       )
 
@@ -33,16 +33,15 @@ RSpec.describe BouldersController, type: :request do
       expect(response.status).to eq 201
       expect(JSON.parse(response.body)['vgrade_range_min']).to eq 2
       expect(JSON.parse(response.body)['vgrade_range_max']).to eq 3
-      expect(JSON.parse(response.body)['indoor']).to eq true
     end
 
     it 'validates fields' do
       boulder_params = { boulder: {
-        vgrade_range_max: 1,
         vgrade_range_max: 2,
         self_grade: -1,
         nickname: 'a'*51,
         rating: 0,
+        boulder_type: 'Lead',
         notes: '1'*401
       } }
 
@@ -55,20 +54,7 @@ RSpec.describe BouldersController, type: :request do
       expect(errors['self_grade']).to include('Self grade must be greater than or equal to 0')
       expect(errors['rating']).to include('Rating must be greater than or equal to 1')
       expect(errors['notes']).to include('Notes is too long (maximum is 400 characters)')
-      expect(errors['base']).to include('At least one type (indoor, outdoor, kilter_board) must be selected')
-    end
-
-    it 'validates that only one climbing type can be true' do
-      post "/boulders", params: { boulder: {
-        vgrade_range_min: 2,
-        vgrade_range_max: 3,
-        indoor: true,
-        kilter_board: true
-      } }
-
-      expect(response.status).to eq 422
-      errors = JSON.parse(response.body)['errors']
-      expect(errors['base']).to include('Select only one bouldering type (indoor, outdoor, kilter_board)')
+      expect(errors['boulder_type']).to include('Boulder type is not included in the list')
     end
   end
 end

@@ -18,17 +18,13 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_09_231031) do
     t.integer "incline"
     t.integer "rating"
     t.text "notes"
-    t.boolean "indoor", default: false
-    t.boolean "outdoor", default: false
-    t.boolean "kilter_board", default: false
+    t.string "boulder_type"
     t.string "nickname", limit: 50
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["boulder_type"], name: "index_boulders_on_boulder_type"
     t.index ["incline"], name: "index_boulders_on_incline"
-    t.index ["indoor"], name: "index_boulders_on_indoor"
-    t.index ["kilter_board"], name: "index_boulders_on_kilter_board"
     t.index ["nickname"], name: "index_boulders_on_nickname"
-    t.index ["outdoor"], name: "index_boulders_on_outdoor"
     t.index ["rating"], name: "index_boulders_on_rating"
     t.index ["self_grade"], name: "index_boulders_on_self_grade"
     t.index ["vgrade_range_max"], name: "index_boulders_on_vgrade_range_max"

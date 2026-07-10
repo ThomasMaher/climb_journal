@@ -30,6 +30,8 @@ class Boulder < ApplicationRecord
 
   has_many :session_climbs
 
+  accepts_nested_attributes_for :session_climbs
+
   validates :vgrade_range_min, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :vgrade_range_max,
             presence: true,

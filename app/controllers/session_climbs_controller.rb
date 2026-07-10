@@ -1,0 +1,3 @@
+class SessionClimbsController < ApplicationController
+
+end

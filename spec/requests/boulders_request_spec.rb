@@ -35,6 +35,53 @@ RSpec.describe BouldersController, type: :request do
       expect(JSON.parse(response.body)['vgrade_range_max']).to eq 3
     end
 
+    it 'accepts nested attributes for a session_climb' do
+      session = Session.create(date: Date.today, gym_name: 'Vital')
+      post "/boulders", params: { boulder: {
+        vgrade_range_min: 2,
+        vgrade_range_max: 3,
+        indoor: true,
+        session_climbs_attributes: [ {
+                                      session_id: session.id,
+                                      attempts: 5,
+                                      percent_finished: 100,
+                                      notes: 'Sick boulder'
+                                    } ]
+      } }
+      boulder = Boulder.last
+      session_climb = SessionClimb.last
+
+      expect(response.status).to eq 201
+      expect(JSON.parse(response.body)['vgrade_range_min']).to eq 2
+      expect(JSON.parse(response.body)['vgrade_range_max']).to eq 3
+      expect(session_climb.boulder_id).to eq boulder.id
+      expect(session_climb.session_id).to eq session.id
+    end
+
+    it 'does not allow two session climbs (session and boulder id must be unique together)' do
+      session = Session.create(date: Date.today, gym_name: 'Vital')
+      post "/boulders", params: { boulder: {
+        vgrade_range_min: 2,
+        vgrade_range_max: 3,
+        indoor: true,
+        session_climbs_attributes: [ {
+                                      session_id: session.id,
+                                      attempts: 5,
+                                      percent_finished: 100,
+                                      notes: 'Sick boulder'
+                                    },
+                                     {
+                                       session_id: session.id,
+                                       attempts: 10,
+                                       percent_finished: 10,
+                                       notes: 'Sick boulder'
+                                     }]
+      } }
+
+      expect(response.status).to eq 422
+      expect(JSON.parse(response.body)['errors']).to include("Only one session climb allowed per session")
+    end
+
     it 'validates fields' do
       boulder_params = { boulder: {
         vgrade_range_max: 2,

@@ -10,6 +10,9 @@ class BouldersController < ApplicationController
   end
 
   def create
+    render json: {
+      errors: ["Only one session climb allowed per session"]
+    }, status: :unprocessable_entity and return unless session_climbs_valid?
     boulder = Boulder.new(boulder_params)
 
     if boulder.save
@@ -38,7 +41,22 @@ class BouldersController < ApplicationController
       :notes,
       :boulder_type,
       :incline,
-      :nickname
+      :nickname,
+      session_climbs_attributes: [
+        :session_id,
+        :attempts,
+        :percent_finished,
+        :notes
+      ]
+    )
+  end
+
+  def session_climbs_valid?
+    boulder_params.present? && (
+      boulder_params[:session_climbs_attributes].nil? || (
+        boulder_params[:session_climbs_attributes].size < 2 &&
+        boulder_params[:session_climbs_attributes][0][:session_id].present?
+      )
     )
   end
 end

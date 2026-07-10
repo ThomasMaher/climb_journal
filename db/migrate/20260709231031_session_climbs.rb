@@ -1,6 +1,6 @@
 class SessionClimbs < ActiveRecord::Migration[8.0]
   def change
-    create_table :session_boulders do |t|
+    create_table :session_climbs do |t|
       t.integer :session_id, null: false
       t.integer :boulder_id, null: false, index: true
 

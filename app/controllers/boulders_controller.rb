@@ -37,7 +37,7 @@ class BouldersController < ApplicationController
       :rating,
       :notes,
       :boulder_type,
-      :kilter_board,
+      :incline,
       :nickname
     )
   end

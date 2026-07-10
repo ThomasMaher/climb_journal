@@ -33,6 +33,6 @@ class SessionsController < ApplicationController
     private
 
     def session_params
-        params.require(:session).permit(:date, :gym_name, :notes, :created_at, :updated_at)
+        params.require(:session).permit(:date, :gym_name, :notes)
     end
 end

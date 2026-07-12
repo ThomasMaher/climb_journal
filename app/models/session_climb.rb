@@ -25,19 +25,19 @@ class SessionClimb < ApplicationRecord
 
   validates :attempts, numericality: { greater_than_or_equal_to: 0 }
   validates :percent_finished, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
+  validates :notes, length: { maximum: 400 }, allow_nil: true
   validates :boulder_id, uniqueness: {
     scope: :session_id,
     message: "has already been added to this session"
   }
 
-  before_save :set_percent_finished
+  before_validation :set_initial_state
 
 
   private
 
-  def set_percent_finished
-    unless self.percent_finished.positive?
-      self.percent_finished = 0
-    end
+  def set_initial_state
+    self.attempts = 0 if self.attempts.nil?
+    self.percent_finished = 0 if self.percent_finished.nil?
   end
 end

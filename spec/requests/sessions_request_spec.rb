@@ -20,7 +20,7 @@ RSpec.describe SessionsController, type: :request do
         it 'returns data for a single specified session' do
             session = Session.last
 
-            get "/sessions/#{session.id}"
+            get "/sessions/#{session.id}", params: {  format: 'json' }
             expect(response.status).to eq 200
             expect(JSON.parse(response.body)).to eq session.as_json
         end

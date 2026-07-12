@@ -13,12 +13,13 @@ class BouldersController < ApplicationController
     render json: {
       errors: ["Only one session climb allowed per session"]
     }, status: :unprocessable_entity and return unless session_climbs_valid?
-    boulder = Boulder.new(boulder_params)
+    @boulder = Boulder.new(boulder_params)
 
-    if boulder.save
-      render json: boulder, status: :created
+    if @boulder.save
+      set_session_climb
+      render :show, status: :created
     else
-      render json: { errors: boulder.errors.as_json(full_messages: true) }, status: :unprocessable_entity
+      render json: { errors: @boulder.errors.as_json(full_messages: true) }, status: :unprocessable_entity
     end
   end
 
@@ -55,8 +56,17 @@ class BouldersController < ApplicationController
     boulder_params.present? && (
       boulder_params[:session_climbs_attributes].nil? || (
         boulder_params[:session_climbs_attributes].size < 2 &&
-        boulder_params[:session_climbs_attributes][0][:session_id].present?
+        boulder_params[:session_climbs_attributes][0][:session_id].present? # There should be a different error for cases when session_id comes up null
       )
+    )
+  end
+
+  def set_session_climb
+    return unless session_climbs_valid? && @boulder&.persisted?
+
+    @session_climb = SessionClimb.find_by(
+      boulder_id: @boulder.id,
+      session_id: boulder_params[:session_climbs_attributes][0][:session_id]
     )
   end
 end

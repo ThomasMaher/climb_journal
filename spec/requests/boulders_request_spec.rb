@@ -103,5 +103,26 @@ RSpec.describe BouldersController, type: :request do
       expect(errors['notes']).to include('Notes is too long (maximum is 400 characters)')
       expect(errors['boulder_type']).to include('Boulder type is not included in the list')
     end
+
+    it 'validates nested attributes for a session_climb' do
+      post "/boulders", params: { boulder: {
+        vgrade_range_min: 2,
+        vgrade_range_max: 3,
+        indoor: true,
+        session_climbs_attributes: [ {
+                                       session_id: 100,
+                                       attempts: -1,
+                                       percent_finished: 200,
+                                       notes: 'a'*401
+                                     } ]
+      } }
+
+      expect(response.status).to eq 422
+      errors = JSON.parse(response.body)['errors']
+      expect(errors["session_climbs.session"]).to include("Session climbs session must exist")
+      expect(errors["session_climbs.attempts"]).to include("Session climbs attempts must be greater than or equal to 0")
+      expect(errors["session_climbs.percent_finished"]).to include("Session climbs percent finished must be less than or equal to 100")
+      expect(errors["session_climbs.notes"]).to include("Session climbs notes is too long (maximum is 400 characters)")
+    end
   end
 end

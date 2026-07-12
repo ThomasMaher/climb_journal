@@ -5,10 +5,10 @@ class SessionsController < ApplicationController
     end
 
     def show
-        session = Session.find_by(id: params[:id])
-        render status: :not_found and return unless session.present?
+        @session = Session.includes(session_climbs: :boulder).find_by(id: params[:id])
+        render status: :not_found and return unless @session.present?
 
-        render json: session
+        render :show
     end
 
     def create

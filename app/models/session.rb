@@ -5,6 +5,7 @@
 #  id         :integer          not null, primary key
 #  date       :date             not null
 #  gym_name   :string(50)       not null
+#  user_id    :integer          not null
 #  notes      :text(255)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -13,6 +14,7 @@
 #
 #  index_sessions_on_date      (date)
 #  index_sessions_on_gym_name  (gym_name)
+#  index_sessions_on_user_id   (user_id)
 #
 
 class Session < ApplicationRecord

@@ -8,8 +8,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "sessions#index"
 
-  resources :sessions, only: %i(index show create destroy) do
-    resources :session_climbs, only: %i(index)
+  resources :users do
+    resources :sessions, only: %i[index show create destroy] do
+      resources :session_climbs, only: %i[index]
+    end
   end
   resources :boulders, only: %i(index show create destroy)
 end

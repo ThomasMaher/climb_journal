@@ -28,7 +28,7 @@ RSpec.describe BouldersController, type: :request do
         vgrade_range_min: 2,
         vgrade_range_max: 3,
         indoor: true
-      } }
+      }, format: :json }
 
       expect(response.status).to eq 201
       expect(JSON.parse(response.body)['vgrade_range_min']).to eq 2
@@ -36,13 +36,14 @@ RSpec.describe BouldersController, type: :request do
     end
 
     it 'accepts nested attributes for a session_climb' do
-      session = Session.create(date: Date.today, gym_name: 'Vital')
-      post "/boulders", params: { boulder: {
+      session = Session.create(date: Date.today, gym_name: 'Vital', user_id: 1)
+      post "/boulders", params: { format: :json, boulder: {
         vgrade_range_min: 2,
         vgrade_range_max: 3,
         indoor: true,
         session_climbs_attributes: [ {
                                       session_id: session.id,
+                                      user_id: 1,
                                       attempts: 5,
                                       percent_finished: 100,
                                       notes: 'Sick boulder'
@@ -59,7 +60,7 @@ RSpec.describe BouldersController, type: :request do
     end
 
     it 'does not allow two session climbs (session and boulder id must be unique together)' do
-      session = Session.create(date: Date.today, gym_name: 'Vital')
+      session = Session.create(date: Date.today, gym_name: 'Vital', user_id: 1)
       post "/boulders", params: { boulder: {
         vgrade_range_min: 2,
         vgrade_range_max: 3,

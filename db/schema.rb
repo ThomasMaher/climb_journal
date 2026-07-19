@@ -34,6 +34,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_09_231031) do
   create_table "session_climbs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "session_id", null: false
     t.integer "boulder_id", null: false
+    t.integer "user_id", null: false
     t.integer "attempts"
     t.integer "percent_finished", null: false
     t.text "notes"
@@ -43,15 +44,18 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_09_231031) do
     t.index ["boulder_id"], name: "index_session_climbs_on_boulder_id"
     t.index ["percent_finished"], name: "index_session_climbs_on_percent_finished"
     t.index ["session_id", "boulder_id"], name: "index_session_climbs_on_session_id_and_boulder_id", unique: true
+    t.index ["user_id"], name: "index_session_climbs_on_user_id"
   end
 
   create_table "sessions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "date", null: false
     t.string "gym_name", limit: 50, null: false
+    t.integer "user_id", null: false
     t.text "notes", size: :tiny
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["date"], name: "index_sessions_on_date"
     t.index ["gym_name"], name: "index_sessions_on_gym_name"
+    t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 end

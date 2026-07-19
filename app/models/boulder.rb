@@ -42,7 +42,11 @@ class Boulder < ApplicationRecord
             }
   validates :self_grade, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :incline, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 90 }, allow_nil: true
-  validates :nickname, length: { maximum: 50 }, allow_nil: true
+  validates :nickname,
+            presence: true,
+            length: { maximum: 50 },
+            # uniqueness: { scope: :user_id } Eventually, boulders belong to a user
+            allow_nil: true
   validates :rating, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }, allow_nil: true
   validates :notes, length: { maximum: 400 }, allow_nil: true
   validates :boulder_type, inclusion: BOULDER_TYPES, allow_nil: true

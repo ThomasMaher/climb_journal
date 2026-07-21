@@ -24,4 +24,8 @@ class Session < ApplicationRecord
     validates :date, presence: true
     validates :gym_name, presence: true, length: { maximum: 50 }
     validates :notes, length: { maximum: 255 }
+
+    scope :on_or_after, ->(start_date) {
+        where('date >= ?', (start_date.is_a?(Date) ? start_date : Time.zone.now - start_date.days))
+    }
 end

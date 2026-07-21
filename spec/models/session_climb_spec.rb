@@ -26,7 +26,8 @@ require 'rails_helper'
 RSpec.describe SessionClimb, type: :model do
   describe 'before validations' do
     it 'sets attempt and percent_finished value if not entered by the user' do
-      session = Session.create(date: Date.today, gym_name: 'Vital', user_id: 1)
+      user = User.create()
+      session = Session.create(date: Date.today, gym_name: 'Vital', user_id: user.id)
       boulder = Boulder.create(
         vgrade_range_min: 2,
         vgrade_range_max: 3,
@@ -35,7 +36,7 @@ RSpec.describe SessionClimb, type: :model do
         nickname: 'Tracy'
       )
 
-      session = SessionClimb.new(session_id: session.id, boulder_id: boulder.id)
+      session = SessionClimb.new(session_id: session.id, boulder_id: boulder.id, user_id: user.id)
       session.valid?
 
       expect(session.percent_finished).to eq 0
@@ -45,7 +46,8 @@ RSpec.describe SessionClimb, type: :model do
 
   describe 'validations' do
     it 'validates join uniqueness of boulder and session id' do
-      session = Session.create(date: Date.today, gym_name: 'Vital', user_id: 1)
+      user = User.create()
+      session = Session.create(date: Date.today, gym_name: 'Vital', user_id: user.id)
       boulder = Boulder.create(
         vgrade_range_min: 2,
         vgrade_range_max: 3,
@@ -54,8 +56,8 @@ RSpec.describe SessionClimb, type: :model do
         nickname: 'Tracy'
       )
 
-      SessionClimb.create(session_id: session.id, boulder_id: boulder.id, user_id: 1)
-      session = SessionClimb.new(session_id: session.id, boulder_id: boulder.id)
+      SessionClimb.create(session_id: session.id, boulder_id: boulder.id, user_id: user.id)
+      session = SessionClimb.new(session_id: session.id, boulder_id: boulder.id, user_id: user.id)
 
       valid = session.valid?
       expect(valid).to be false

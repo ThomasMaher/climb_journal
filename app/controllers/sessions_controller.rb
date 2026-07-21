@@ -2,12 +2,12 @@ class SessionsController < ApplicationController
     before_action :set_user
 
     def index
-        sessions = Session.where(user_id: params[:user_id])
+        sessions = @user.sessions
         render json: sessions
     end
 
     def show
-        @session = Session.includes(session_climbs: :boulder).find_by(id: params[:id])
+        @session = @user.sessions.includes(session_climbs: :boulder).find_by(id: params[:id])
         render json: { error: 'No session found.' }, status: :not_found and return unless @session.present?
 
         render :show
@@ -35,7 +35,8 @@ class SessionsController < ApplicationController
     private
 
     def set_user
-        render json: { error: 'User not found.' }, status: :not_found and return unless params[:user_id].present?
+        @user = User.find_by(id: params[:user_id])
+        render json: { error: 'User not found.' }, status: :not_found and return unless @user.present?
     end
 
     def session_params

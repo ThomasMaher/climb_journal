@@ -19,6 +19,7 @@
 
 class Session < ApplicationRecord
     has_many :session_climbs
+    belongs_to :user
 
     validates :date, presence: true
     validates :gym_name, presence: true, length: { maximum: 50 }

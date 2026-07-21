@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_07_09_231031) do
+ActiveRecord::Schema[8.0].define(version: 2026_07_19_235947) do
   create_table "boulders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "vgrade_range_min", null: false
     t.integer "vgrade_range_max"
@@ -57,5 +57,12 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_09_231031) do
     t.index ["date"], name: "index_sessions_on_date"
     t.index ["gym_name"], name: "index_sessions_on_gym_name"
     t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 end

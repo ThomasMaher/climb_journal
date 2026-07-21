@@ -2,15 +2,17 @@ require 'rails_helper'
 
 RSpec.describe SessionsController, type: :request do
     before do
-        Session.create(date: Date.today - 1.year, gym_name: 'Vital', user_id: 1)
-        Session.create(date: Date.today, gym_name: 'Vital', user_id: 1)
+        user = User.create
+        Session.create(date: Date.today - 1.year, gym_name: 'Vital', user_id: user.id)
+        Session.create(date: Date.today, gym_name: 'Vital', user_id: user.id)
     end
+    let(:user) { User.last }
 
     describe '#index' do
         it 'provides a list of all sessions' do
-            sessions = Session.all
+            sessions = user.sessions
 
-            get '/users/1/sessions'
+            get "/users/#{user.id}/sessions"
             expect(response.status).to eq 200
             expect(JSON.parse(response.body).length).to eq sessions.length
         end
@@ -20,7 +22,7 @@ RSpec.describe SessionsController, type: :request do
         it 'returns data for a single specified session' do
             session = Session.last
 
-            get "/users/1/sessions/#{session.id}", params: {  format: 'json' }
+            get "/users/#{user.id}/sessions/#{session.id}", params: {  format: 'json' }
             expect(response.status).to eq 200
             result = JSON.parse(response.body)
             expect(result['gym_name']).to eq session.gym_name
@@ -30,7 +32,7 @@ RSpec.describe SessionsController, type: :request do
         end
 
         it 'returns not found if the session does not exist by id' do
-            get "/users/1/sessions/-10"
+            get "/users/#{user.id}/sessions/-10"
             expect(response.status).to eq 404
         end
     end
@@ -42,7 +44,7 @@ RSpec.describe SessionsController, type: :request do
             note = 'Fun session'
             session_params = {session: {date: date, gym_name: gym_name, notes: note } }
 
-            post '/users/1/sessions', params: session_params
+            post "/users/#{user.id}/sessions", params: session_params
             expect(response.status).to eq 200
             expect(JSON.parse(response.body)['date']).to eq date.to_s
             expect(JSON.parse(response.body)['gym_name']).to eq gym_name
@@ -52,7 +54,7 @@ RSpec.describe SessionsController, type: :request do
         it 'validates fields' do
             session_params = {session: {date: nil, gym_name: 'Vital'*50, notes: 'Fun'*250 } }
 
-            post '/users/1/sessions', params: session_params
+            post "/users/#{user.id}/sessions", params: session_params
             expect(response.status).to eq 422
             errors = JSON.parse(response.body)['errors']
             expect(errors['date']).to include('Date can\'t be blank')

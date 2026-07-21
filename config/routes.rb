@@ -8,7 +8,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "sessions#index"
 
-  resources :users do
+  resources :users, only: [] do
+    resource "home_stats.json.jbuilder", controller: :users, action: :home_stats
     resources :sessions, only: %i[index show create destroy] do
       resources :session_climbs, only: %i[index]
     end

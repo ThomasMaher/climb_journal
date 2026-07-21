@@ -36,14 +36,15 @@ RSpec.describe BouldersController, type: :request do
     end
 
     it 'accepts nested attributes for a session_climb' do
-      session = Session.create(date: Date.today, gym_name: 'Vital', user_id: 1)
+      user = User.create()
+      session = Session.create(date: Date.today, gym_name: 'Vital', user_id: user.id)
       post "/boulders", params: { format: :json, boulder: {
         vgrade_range_min: 2,
         vgrade_range_max: 3,
         indoor: true,
         session_climbs_attributes: [ {
                                       session_id: session.id,
-                                      user_id: 1,
+                                      user_id: user.id,
                                       attempts: 5,
                                       percent_finished: 100,
                                       notes: 'Sick boulder'

@@ -24,6 +24,9 @@
 class SessionClimb < ApplicationRecord
   belongs_to :boulder
   belongs_to :session
+  belongs_to :user
+
+  scope :sent, -> { where(percent_finished: 100) }
 
   validates :attempts, numericality: { greater_than_or_equal_to: 0 }
   validates :percent_finished, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
@@ -34,6 +37,8 @@ class SessionClimb < ApplicationRecord
   }
 
   before_validation :set_initial_state
+
+  delegate :vgrade_range_max, to: :boulder
 
 
   private

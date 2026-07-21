@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
     return sessions.size unless days_ago.present?
 
     sessions.where(
-      'date < ?', Time.zone.now - days_ago.days
+      'date > ?', Time.zone.now - days_ago.days
     ).size
   end
 
@@ -20,13 +20,13 @@ class User < ActiveRecord::Base
     sessions
       .joins(session_climbs: :boulder)
       .where('session_climbs.percent_finished = 100')
-      .where('date < ?', Time.zone.now - days_ago.days)
+      .where('date > ?', Time.zone.now - days_ago.days)
       .maximum(:vgrade_range_max)
   end
 
   def avg_sent_grade(days_ago: nil)
     result = session_climbs.joins(:boulder, :session).where(percent_finished: 100)
-    result = result.where("sessions.date < ?", Time.zone.now - days_ago.days) if days_ago.present?
+    result = result.where("sessions.date > ?", Time.zone.now - days_ago.days) if days_ago.present?
 
     result.pick(Arel.sql(
       "ROUND(AVG( (boulders.vgrade_range_min + boulders.vgrade_range_max) / 2.0))"
@@ -36,11 +36,11 @@ class User < ActiveRecord::Base
   def most_frequented_gym(days_ago: nil)
     return nil unless sessions.any?
     result = sessions.group(:gym_name).order(Arel.sql('COUNT(*) DESC'))
-    return result.count.first[0] unless days_ago.present?
+    return result.count.first unless days_ago.present?
 
     result.where(
-        'date < ?', Time.zone.now - days_ago.days
-    ).group(:gym_name).order(Arel.sql('COUNT(*) DESC')).count.first[0]
+        'date > ?', Time.zone.now - days_ago.days
+    ).group(:gym_name).order(Arel.sql('COUNT(*) DESC')).count.first
   end
 
   def sends_by_grade(days_ago: nil)
@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
       .joins(:boulder, :session)
       .where(user_id: id)
       .where(percent_finished: 100)
-    result = result.where("sessions.date < ?", Time.zone.now - days_ago.days) if days_ago.present?
+    result = result.where("sessions.date > ?", Time.zone.now - days_ago.days) if days_ago.present?
 
     result = result.group("boulders.vgrade_range_max").order("boulders.vgrade_range_max").count
     result.map { |grade, count| { vgrade: grade, sends: count } }

@@ -54,4 +54,3 @@ class User < ActiveRecord::Base
     result.map { |grade, count| { vgrade: grade, sends: count } }
   end
 end
-

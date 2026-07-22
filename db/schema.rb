@@ -11,7 +11,10 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2026_07_19_235947) do
-  create_table "boulders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
+  create_table "boulders", force: :cascade do |t|
     t.integer "vgrade_range_min", null: false
     t.integer "vgrade_range_max"
     t.integer "self_grade"
@@ -31,12 +34,13 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_19_235947) do
     t.index ["vgrade_range_min"], name: "index_boulders_on_vgrade_range_min"
   end
 
-  create_table "session_climbs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "session_climbs", force: :cascade do |t|
     t.integer "session_id", null: false
     t.integer "boulder_id", null: false
     t.integer "user_id", null: false
     t.integer "attempts"
     t.integer "percent_finished", null: false
+    t.boolean "warmup"
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -45,13 +49,14 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_19_235947) do
     t.index ["percent_finished"], name: "index_session_climbs_on_percent_finished"
     t.index ["session_id", "boulder_id"], name: "index_session_climbs_on_session_id_and_boulder_id", unique: true
     t.index ["user_id"], name: "index_session_climbs_on_user_id"
+    t.index ["warmup"], name: "index_session_climbs_on_warmup"
   end
 
-  create_table "sessions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "sessions", force: :cascade do |t|
     t.date "date", null: false
     t.string "gym_name", limit: 50, null: false
     t.integer "user_id", null: false
-    t.text "notes", size: :tiny
+    t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["date"], name: "index_sessions_on_date"
@@ -59,7 +64,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_19_235947) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.datetime "created_at", null: false

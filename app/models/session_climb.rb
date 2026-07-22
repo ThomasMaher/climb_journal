@@ -8,7 +8,8 @@
 #  user_id          :integer          not null
 #  attempts         :integer
 #  percent_finished :integer          not null
-#  notes            :text(65535)
+#  warmup           :boolean
+#  notes            :text
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #
@@ -19,6 +20,7 @@
 #  index_session_climbs_on_percent_finished           (percent_finished)
 #  index_session_climbs_on_session_id_and_boulder_id  (session_id,boulder_id) UNIQUE
 #  index_session_climbs_on_user_id                    (user_id)
+#  index_session_climbs_on_warmup                     (warmup)
 #
 
 class SessionClimb < ApplicationRecord

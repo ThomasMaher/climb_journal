@@ -6,7 +6,7 @@
 #  date       :date             not null
 #  gym_name   :string(50)       not null
 #  user_id    :integer          not null
-#  notes      :text(255)
+#  notes      :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

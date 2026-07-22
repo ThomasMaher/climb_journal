@@ -7,6 +7,7 @@ class SessionClimbs < ActiveRecord::Migration[8.0]
 
       t.integer :attempts, index: true
       t.integer :percent_finished, null: false, index: true
+      t.boolean :warmup, index: true
 
       t.text :notes, limit: 400
 

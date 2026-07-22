@@ -44,7 +44,7 @@ class UserStatsService
     result = result.where('sessions.date >= ?', Time.zone.today - @days_ago.days) if @days_ago.present?
 
     result.pick(Arel.sql(
-      "ROUND(AVG( (boulders.vgrade_range_min + boulders.vgrade_range_max) / 2.0))"
+      "ROUND(AVG( (boulders.vgrade_range_min + boulders.vgrade_range_max) / 2.0))::integer"
     ))
   end
 

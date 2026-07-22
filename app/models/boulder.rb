@@ -8,8 +8,8 @@
 #  self_grade       :integer
 #  incline          :integer
 #  rating           :integer
-#  notes            :text(65535)
-#  boulder_type     :string(255)
+#  notes            :text
+#  boulder_type     :string
 #  nickname         :string(50)
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null

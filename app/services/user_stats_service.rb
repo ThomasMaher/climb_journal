@@ -14,12 +14,15 @@ class UserStatsService
     @days_ago = days_ago
     {
       total_sessions: total_sessions,
-      highest_grade: highest_grade,
+      highest_grade: highest_grade_sent,
       avg_sent_grade: avg_sent_grade,
       most_frequented_gym: most_frequented_gym,
       sends_by_grade: sends_by_grade
     }
   end
+
+
+  private
 
   def total_sessions
     return sessions.size unless @days_ago.present?
@@ -27,7 +30,7 @@ class UserStatsService
     sessions.on_or_after(Time.zone.today - days_ago).size
   end
 
-  def highest_grade
+  def highest_grade_sent
     return boulders
              .joins(:session_climbs)
              .where('session_climbs.percent_finished = 100')

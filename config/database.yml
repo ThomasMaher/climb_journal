@@ -12,13 +12,11 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-
   host: localhost
   port: 5432
-  username: <%= Rails.application.credentials.development[:user] %>
-  password: <%= Rails.application.credentials.development[:password] %>
+  username: <%= ENV["DATABASE_USER"] %>
+  password: <%= ENV["DATABASE_PW"] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  socket: /tmp/mysql.sock
 
 development:
   <<: *default

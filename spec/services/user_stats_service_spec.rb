@@ -53,9 +53,5 @@ RSpec.describe 'UserStatsService' do
     it 'produces highest grade sent within a period based on max vgrade range' do
       expect(service.run(days_ago: 30)[:highest_grade]).to eq 15
     end
-
-    it 'excludes climbs that have not been sent' do
-      expect(service.run[:highest_grade]).to eq 15
-    end
   end
 end

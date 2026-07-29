@@ -2,7 +2,7 @@
 
 This is the backend api for my application for tracking climbing sessions, and visualizing climbing progress over time.
 
-- Ruby 3.2.6
+- Ruby 3.3.9
 - Ruby on Rails 8.0.5
 - PostgreSQL 18
 - RSpec

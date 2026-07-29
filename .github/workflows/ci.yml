@@ -85,8 +85,8 @@ jobs:
           RAILS_ENV: test
           DATABASE_HOST: 127.0.0.1
           DATABASE_PORT: 5432
-          DATABASE_USER: ${DATABASE_USER}
-          DATABASE_PASSWORD: ${DATABASE_PW}
+          DATABASE_USER: postgres
+          DATABASE_PW: postgres
           DATABASE_NAME: climb_journal_test
         run: |
           bin/rails db:prepare

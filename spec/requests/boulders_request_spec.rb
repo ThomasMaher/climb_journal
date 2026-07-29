@@ -77,7 +77,7 @@ RSpec.describe BouldersController, type: :request do
                                        attempts: 10,
                                        percent_finished: 10,
                                        notes: 'Sick boulder'
-                                     }]
+                                     } ]
       } }
 
       expect(response.status).to eq 422

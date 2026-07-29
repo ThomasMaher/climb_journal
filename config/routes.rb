@@ -14,5 +14,5 @@ Rails.application.routes.draw do
       resources :session_climbs, only: %i[index]
     end
   end
-  resources :boulders, only: %i(index show create destroy)
+  resources :boulders, only: %i[index show create destroy]
 end

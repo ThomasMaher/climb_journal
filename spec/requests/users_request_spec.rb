@@ -37,12 +37,12 @@ RSpec.describe 'Users', type: :request do
       expect(overall['highest_grade']).to eq 9
       expect(overall['avg_sent_grade']).to eq 7
       expect(overall['most_frequented_gym']).to eq 'Vital'
-      expect(overall['sends_by_grade']).to match_array [{ "vgrade" => 9, "sends" => 1 }, { "vgrade" => 5, "sends" => 1 }]
+      expect(overall['sends_by_grade']).to match_array [ { "vgrade" => 9, "sends" => 1 }, { "vgrade" => 5, "sends" => 1 } ]
       expect(past_month['total_sessions']).to eq 1
       expect(past_month['highest_grade']).to eq 5
       expect(past_month['avg_sent_grade']).to eq 5
       expect(past_month['most_frequented_gym']).to eq 'Vital'
-      expect(past_month['sends_by_grade']).to match_array [{ "vgrade" => 5, "sends" => 1 }]
+      expect(past_month['sends_by_grade']).to match_array [ { "vgrade" => 5, "sends" => 1 } ]
     end
   end
 end

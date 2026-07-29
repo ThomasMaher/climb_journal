@@ -51,4 +51,3 @@ class Boulder < ApplicationRecord
   validates :notes, length: { maximum: 400 }, allow_nil: true
   validates :boulder_type, inclusion: BOULDER_TYPES, allow_nil: true
 end
-

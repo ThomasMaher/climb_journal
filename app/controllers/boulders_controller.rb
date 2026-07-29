@@ -1,6 +1,6 @@
 class BouldersController < ApplicationController
   def index
-    render json: {message: 'Coming soon.'}
+    render json: { message: "Coming soon." }
   end
 
   def show
@@ -11,7 +11,7 @@ class BouldersController < ApplicationController
 
   def create
     render json: {
-      errors: ["Only one session climb allowed per session"]
+      errors: [ "Only one session climb allowed per session" ]
     }, status: :unprocessable_entity and return unless params_valid?
     @boulder = Boulder.new(boulder_params)
 

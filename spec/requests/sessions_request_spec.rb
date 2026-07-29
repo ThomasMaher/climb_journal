@@ -42,7 +42,7 @@ RSpec.describe SessionsController, type: :request do
             date = Date.today - 1.day
             gym_name = 'Vital'
             note = 'Fun session'
-            session_params = {session: {date: date, gym_name: gym_name, notes: note } }
+            session_params = { session: { date: date, gym_name: gym_name, notes: note } }
 
             post "/users/#{user.id}/sessions", params: session_params
             expect(response.status).to eq 200
@@ -52,7 +52,7 @@ RSpec.describe SessionsController, type: :request do
         end
 
         it 'validates fields' do
-            session_params = {session: {date: nil, gym_name: 'Vital'*50, notes: 'Fun'*250 } }
+            session_params = { session: { date: nil, gym_name: 'Vital'*50, notes: 'Fun'*250 } }
 
             post "/users/#{user.id}/sessions", params: session_params
             expect(response.status).to eq 422

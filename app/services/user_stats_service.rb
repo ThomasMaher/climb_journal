@@ -33,18 +33,18 @@ class UserStatsService
   def highest_grade_sent
     return boulders
              .joins(:session_climbs)
-             .where('session_climbs.percent_finished = 100')
+             .where("session_climbs.percent_finished = 100")
              .maximum(:vgrade_range_max) unless @days_ago.present?
 
     @sessions
       .on_or_after(@days_ago)
-      .where('session_climbs.percent_finished = 100')
+      .where("session_climbs.percent_finished = 100")
       .maximum(:vgrade_range_max)
   end
 
   def avg_sent_grade
     result = session_climbs.joins(:boulder, :session).where(percent_finished: 100)
-    result = result.where('sessions.date >= ?', Time.zone.today - @days_ago.days) if @days_ago.present?
+    result = result.where("sessions.date >= ?", Time.zone.today - @days_ago.days) if @days_ago.present?
 
     result.pick(Arel.sql(
       "ROUND(AVG( (boulders.vgrade_range_min + boulders.vgrade_range_max) / 2.0))::integer"
@@ -53,15 +53,15 @@ class UserStatsService
 
   def most_frequented_gym
     return nil unless sessions.any?
-    result = sessions.group(:gym_name).order(Arel.sql('COUNT(*) DESC'))
+    result = sessions.group(:gym_name).order(Arel.sql("COUNT(*) DESC"))
     return result.count.first[0] unless @days_ago.present?
 
-    result = result.on_or_after(@days_ago).group(:gym_name).order(Arel.sql('COUNT(*) DESC')).count
-    result.present? ? result.first[0] : ''
+    result = result.on_or_after(@days_ago).group(:gym_name).order(Arel.sql("COUNT(*) DESC")).count
+    result.present? ? result.first[0] : ""
   end
 
   def sends_by_grade
-    result = @sessions.where('session_climbs.percent_finished = 100')
+    result = @sessions.where("session_climbs.percent_finished = 100")
     result = result.on_or_after(@days_ago) if @days_ago.present?
 
     result = result.group("boulders.vgrade_range_max").order("boulders.vgrade_range_max").count

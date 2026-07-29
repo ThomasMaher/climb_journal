@@ -26,6 +26,6 @@ class Session < ApplicationRecord
     validates :notes, length: { maximum: 255 }
 
     scope :on_or_after, ->(start_date) {
-        where('date >= ?', (start_date.is_a?(Date) ? start_date : Time.zone.now - start_date.days))
+        where("date >= ?", (start_date.is_a?(Date) ? start_date : Time.zone.now - start_date.days))
     }
 end

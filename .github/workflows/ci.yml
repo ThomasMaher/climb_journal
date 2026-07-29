@@ -63,7 +63,10 @@ jobs:
 
     steps:
       - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential \
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y \
+          build-essential \
           libpq-dev \
           libyaml-dev \
           pkg-config

@@ -27,6 +27,11 @@ services:
       DATABASE_USER: ${DATABASE_USER}
       DATABASE_PW: ${DATABASE_PW}
       RAILS_ENV: development
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/up"]
+      interval: 60s
+      timeout: 10s
+      retries: 5
 
 volumes:
   postgres-data:

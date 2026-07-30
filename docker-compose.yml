@@ -11,5 +11,22 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql
 
+  rails:
+    build: .
+    container_name: climb-journal-api
+    command: bin/rails server -b 0.0.0.0
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PW: ${DATABASE_PW}
+      RAILS_ENV: development
+
 volumes:
   postgres-data:

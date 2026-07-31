@@ -52,3 +52,7 @@ group :development, :test do
   gem "annotate"
   gem "rspec-rails"
 end
+
+group :test do
+  gem "factory_bot_rails"
+end

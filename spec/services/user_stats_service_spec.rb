@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'UserStatsService' do
   before do
-    user = User.create(first_name: 'Mejdi', username: 'mejdi', password: 'password')
+    user = create :user
     session1 = Session.create(gym_name: 'GP81', date: Time.zone.today - 1.day, user_id: user.id)
     session2 = Session.create(gym_name: 'Vital', date: Time.zone.today - 31.days, user_id: user.id)
     b = Boulder.create(vgrade_range_min: 14, vgrade_range_max: 15)

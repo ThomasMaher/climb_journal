@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe BouldersController, type: :request do
   before do
-    User.create(username: 'tmaher', password: 'password')
-    post '/login', params: { user: { username: 'tmaher', password_digest: 'password' } }
+    user = create :user, password: 'password'
+    post '/login', params: { user: { username: user.username, password_digest: 'password' } }
   end
   let(:user) { User.last }
 

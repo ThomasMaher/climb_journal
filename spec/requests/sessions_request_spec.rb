@@ -13,7 +13,7 @@ RSpec.describe SessionsController, type: :request do
         it 'provides a list of all sessions' do
             sessions = user.sessions
 
-            get "/users/#{user.id}/sessions"
+            get "/sessions"
             expect(response.status).to eq 200
             expect(JSON.parse(response.body).length).to eq sessions.length
         end
@@ -23,7 +23,7 @@ RSpec.describe SessionsController, type: :request do
         it 'returns data for a single specified session' do
             session = Session.last
 
-            get "/users/#{user.id}/sessions/#{session.id}", params: {  format: 'json' }
+            get "/sessions/#{session.id}", params: {  format: 'json' }
             expect(response.status).to eq 200
             result = JSON.parse(response.body)
             expect(result['gym_name']).to eq session.gym_name
@@ -33,7 +33,7 @@ RSpec.describe SessionsController, type: :request do
         end
 
         it 'returns not found if the session does not exist by id' do
-            get "/users/#{user.id}/sessions/-10"
+            get "/sessions/-10"
             expect(response.status).to eq 404
         end
     end
@@ -45,7 +45,7 @@ RSpec.describe SessionsController, type: :request do
             note = 'Fun session'
             session_params = { session: { date: date, gym_name: gym_name, notes: note } }
 
-            post "/users/#{user.id}/sessions", params: session_params
+            post "/sessions", params: session_params
             expect(response.status).to eq 200
             expect(JSON.parse(response.body)['date']).to eq date.to_s
             expect(JSON.parse(response.body)['gym_name']).to eq gym_name
@@ -55,7 +55,7 @@ RSpec.describe SessionsController, type: :request do
         it 'validates fields' do
             session_params = { session: { date: nil, gym_name: 'Vital'*50, notes: 'Fun'*250 } }
 
-            post "/users/#{user.id}/sessions", params: session_params
+            post "/sessions", params: session_params
             expect(response.status).to eq 422
             errors = JSON.parse(response.body)['errors']
             expect(errors['date']).to include('Date can\'t be blank')

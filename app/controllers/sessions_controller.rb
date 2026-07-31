@@ -1,20 +1,18 @@
 class SessionsController < ApplicationController
-    before_action :set_user
-
     def index
-        sessions = @user.sessions
+        sessions = current_user.sessions
         render json: sessions
     end
 
     def show
-        @session = @user.sessions.includes(session_climbs: :boulder).find_by(id: params[:id])
+        @session = current_user.sessions.includes(session_climbs: :boulder).find_by(id: params[:id])
         render json: { error: "No session found." }, status: :not_found and return unless @session.present?
 
         render :show
     end
 
     def create
-        session = Session.new(session_params.merge(user_id: params[:user_id]))
+        session = Session.new(session_params.merge(user_id: current_user.id))
 
         if session.save
             render json: session
@@ -33,11 +31,6 @@ class SessionsController < ApplicationController
 
 
     private
-
-    def set_user
-        @user = User.find_by(id: params[:user_id])
-        render json: { error: "User not found." }, status: :not_found and return unless @user.present?
-    end
 
     def session_params
         params.require(:session).permit(:date, :gym_name, :notes)

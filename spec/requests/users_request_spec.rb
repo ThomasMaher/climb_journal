@@ -32,7 +32,7 @@ RSpec.describe 'Users', type: :request do
       SessionClimb.create(session_id: session1.id, user_id: user.id, boulder_id: boulder2.id, attempts: 10, percent_finished: 80)
       SessionClimb.create(session_id: session2.id, user_id: user.id, boulder_id: boulder2.id, attempts: 15, percent_finished: 100)
 
-      get "/users/#{user.id}/home_stats", params: { format: :json }
+      get "/home_stats", params: { format: :json }
       result = JSON.parse(response.body)
       overall = result['overall']
       past_month = result['past_month']

@@ -28,7 +28,7 @@ require 'rails_helper'
 RSpec.describe SessionClimb, type: :model do
   describe 'before validations' do
     it 'sets attempt and percent_finished value if not entered by the user' do
-      user = User.create()
+      user = User.create(username: "tmaher", password_digest: "password")
       session = Session.create(date: Date.today, gym_name: 'Vital', user_id: user.id)
       boulder = Boulder.create(
         vgrade_range_min: 2,

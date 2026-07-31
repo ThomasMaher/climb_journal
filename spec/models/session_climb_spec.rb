@@ -47,8 +47,8 @@ RSpec.describe SessionClimb, type: :model do
   end
 
   describe 'validations' do
-    it 'validates join uniqueness of boulder and session id' do
-      user = User.create()
+    it 'validates joint uniqueness of boulder and session id' do
+      user = User.create(username: "tmaher", password_digest: "password")
       session = Session.create(date: Date.today, gym_name: 'Vital', user_id: user.id)
       boulder = Boulder.create(
         vgrade_range_min: 2,

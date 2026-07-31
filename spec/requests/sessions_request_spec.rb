@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe SessionsController, type: :request do
     before do
-        user = User.create
+        user = User.create(username: 'tmaher', password: 'password')
+        post '/login', params: { user: { username: 'tmaher', password_digest: 'password' } }
         Session.create(date: Date.today - 1.year, gym_name: 'Vital', user_id: user.id)
         Session.create(date: Date.today, gym_name: 'Vital', user_id: user.id)
     end

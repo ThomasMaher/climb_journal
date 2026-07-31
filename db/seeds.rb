@@ -7,7 +7,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-user = User.create(first_name: 'Tom', last_name: 'Maher')
+user = User.create(first_name: 'Tom', last_name: 'Maher', password: 'password', username: 'tmaher')
 
 session1 = Session.create(date: Time.zone.today - 7.days, gym_name: 'Vital', user_id: user.id)
 session2 = Session.create(date: Time.zone.today - 2.days, gym_name: 'Vital', user_id: user.id)

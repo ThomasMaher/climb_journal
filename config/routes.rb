@@ -8,7 +8,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "sessions#index"
 
-  resources :users, only: [] do
+  post "/login", to: "auth#create"
+  delete "/logout", to: "auth#destroy"
+
+  resources :users, only: %i[create] do
     resource "home_stats", controller: :users, action: :home_stats
     resources :sessions, only: %i[index show create destroy] do
       resources :session_climbs, only: %i[index]

@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe BouldersController, type: :request do
+  before do
+    User.create(username: 'tmaher', password: 'password')
+    post '/login', params: { user: { username: 'tmaher', password_digest: 'password' } }
+  end
+  let(:user) { User.last }
+
   describe '#show' do
     it 'returns data for a single specified boulder' do
       boulder = Boulder.create(
@@ -36,7 +42,6 @@ RSpec.describe BouldersController, type: :request do
     end
 
     it 'accepts nested attributes for a session_climb' do
-      user = User.create()
       session = Session.create(date: Date.today, gym_name: 'Vital', user_id: user.id)
       post "/boulders", params: { format: :json, boulder: {
         vgrade_range_min: 2,
@@ -61,7 +66,7 @@ RSpec.describe BouldersController, type: :request do
     end
 
     it 'does not allow two session climbs (session and boulder id must be unique together)' do
-      session = Session.create(date: Date.today, gym_name: 'Vital', user_id: 1)
+      session = Session.create(date: Date.today, gym_name: 'Vital', user_id: user.id)
       post "/boulders", params: { boulder: {
         vgrade_range_min: 2,
         vgrade_range_max: 3,

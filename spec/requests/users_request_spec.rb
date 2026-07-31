@@ -1,10 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
+  before do
+    User.create(first_name: 'Camilla', last_name: 'Moroni', username: 'tmaher', password: 'password')
+    post '/login', params: { user: { username: 'tmaher', password_digest: 'password' } }
+  end
+  let(:user) { User.last }
+
   describe '#home_stats' do
     # This is more of a feature test and doesn't belong here - need to find the right place for this test
     it 'produces expected stats for user' do
-      user = User.create(first_name: 'Camilla', last_name: 'Moroni')
       session1 = Session.create(user: user, gym_name: 'Vital', date: Time.zone.today - 31.days)
       session2 = Session.create(user: user, gym_name: 'Vital', date: Time.zone.today - 10.days)
       boulder1 = Boulder.create(

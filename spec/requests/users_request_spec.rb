@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
   before do
-    User.create(first_name: 'Camilla', last_name: 'Moroni', username: 'tmaher', password: 'password')
+    User.create(first_name: 'Camilla', last_name: 'Moroni', username: 'camilla', password: 'password123')
     post '/login', params: { user: { username: 'tmaher', password_digest: 'password' } }
   end
   let(:user) { User.last }

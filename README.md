@@ -20,7 +20,8 @@ Example:
 
 DATABASE_USER=your_username
 DATABASE_PW=your_password
-Installation
+
+#### Installation
 
 Start PostgreSQL/Rails with Docker Compose:
 
@@ -44,31 +45,16 @@ Create the database (first time only):
 
 `docker compose run --rm -e RAILS_ENV=test rails bundle exec rspec`
 
-### Project Structure
-backend\
-├── app \
-├── config\
-├── db\
-├── spec\
-└── Dockerfile
+### Running the app
 
+The frontend app can be found at:
 (https://github.com/ThomasMaher/climb-journal-web)
-frontend\
-├── src\
-├── public\
-└── package.json
-
-
-The application currently runs with:
-
-- Rails running locally
-- React running locally
-- PostgreSQL running in Docker
+and can run locally with node.
 
 
 #### TODO:
-- Containerize the Rails application
-- Containerize the React frontend
-- Authentication
-- User accounts
+- ✅ Containerize the Rails application
+- ⏭️Containerize the React frontend
+- ✅ Authentication
+- ✅ User accounts
 - Improved analytics and visualizations

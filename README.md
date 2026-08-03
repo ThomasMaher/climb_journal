@@ -22,9 +22,7 @@ DATABASE_USER=your_username
 DATABASE_PW=your_password
 Installation
 
-`bundle install`
-
-Start PostgreSQL with Docker Compose:
+Start PostgreSQL/Rails with Docker Compose:
 
 `docker compose up -d`
 
@@ -40,11 +38,11 @@ Stop the database:
 
 Create the database (first time only):
 
-`rails db:create db:migrate db:seed`
+`docker compose run --rm rails bin/rails db:prepare db:seed`
 
-`rails server`
+#### to run tests
 
-`bundle exec rspec` to run tests
+`docker compose run --rm -e RAILS_ENV=test rails bundle exec rspec`
 
 ### Project Structure
 backend\

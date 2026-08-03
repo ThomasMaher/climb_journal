@@ -10,12 +10,13 @@ Rails.application.routes.draw do
 
   post "/login", to: "auth#create"
   delete "/logout", to: "auth#destroy"
+  get "/user_status", to: "auth#user_status"
 
-  resources :users, only: %i[create]
+  resources :users, only: %i[ create ]
   resource "home_stats", controller: :users, action: :home_stats
 
-  resources :boulders, only: %i[index show create destroy]
-  resources :sessions, only: %i[index show create destroy] do
-    resources :session_climbs, only: %i[index]
+  resources :boulders, only: %i[ index show create destroy ]
+  resources :sessions, only: %i[ index show create destroy ] do
+    resources :session_climbs, only: %i[ index show create destroy ]
   end
 end

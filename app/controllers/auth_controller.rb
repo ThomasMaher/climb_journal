@@ -1,7 +1,7 @@
 class AuthController < ApplicationController
   skip_before_action :authenticate_user!, only: :create
 
-  def show
+  def user_status
     render json: current_user
   end
 

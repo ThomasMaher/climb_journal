@@ -17,7 +17,8 @@ class AuthController < ApplicationController
   end
 
   def destroy
-    session.destroy(:user_id)
+    session.delete(:user_id)
+    render json: {}, status: :no_content
   end
 
 

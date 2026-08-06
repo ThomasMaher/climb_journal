@@ -29,6 +29,12 @@ class SessionsController < ApplicationController
         render json: { success: success }, status: success ? :ok : :unprocessable_entity
     end
 
+    def session_stats
+        session = current_user.sessions.includes(session_climbs: :boulder).find_by(id: params[:id])
+
+        render json: SessionStatsService.run(session)
+    end
+
 
     private
 

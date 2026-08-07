@@ -30,9 +30,11 @@ class SessionsController < ApplicationController
     end
 
     def session_stats
-        session = current_user.sessions.includes(session_climbs: :boulder).find_by(id: params[:id])
+        session = current_user.sessions.includes(session_climbs: :boulder).find(params[:session_id])
+        render json: { error: "No session found." }, status: :not_found and return unless session.present?
 
-        render json: SessionStatsService.run(session)
+        session_stats_service = SessionStatsService.new(session)
+        render json: session_stats_service.run
     end
 
 

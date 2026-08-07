@@ -29,7 +29,8 @@ class SessionClimb < ApplicationRecord
   belongs_to :user
 
   scope :sent, -> { where(percent_finished: 100) }
-  scope :not_warmup, -> { where(warmup: false) }
+  scope :warmup, -> { where(warmup: true) }
+  scope :not_warmup, -> { !warmup }
 
   validates :attempts, numericality: { greater_than_or_equal_to: 0 }
   validates :percent_finished, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }

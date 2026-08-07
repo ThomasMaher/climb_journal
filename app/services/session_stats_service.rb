@@ -23,7 +23,7 @@ class SessionStatsService
   end
 
   def sends_by_grade
-    result = @session.session_climbs.not_warmup.sent
+    result = @session.session_climbs.joins(:boulder).not_warmup.sent
 
     result = result.group("boulders.vgrade_range_max").order("boulders.vgrade_range_max").count
     result.map { |grade, count| { vgrade: grade, sends: count } }

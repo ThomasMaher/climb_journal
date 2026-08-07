@@ -48,6 +48,7 @@ class BouldersController < ApplicationController
         :user_id,
         :attempts,
         :percent_finished,
+        :warmup,
         :notes
       ]
     )

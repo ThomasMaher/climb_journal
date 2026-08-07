@@ -9,5 +9,6 @@ json.extract! @boulder,
               :incline,
               :rating,
               :notes,
+              :warmup,
               :boulder_type,
               :nickname

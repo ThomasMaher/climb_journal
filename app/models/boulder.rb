@@ -30,6 +30,8 @@ class Boulder < ApplicationRecord
 
   has_many :session_climbs
 
+  before_validation :titleize_type
+
   accepts_nested_attributes_for :session_climbs
 
   validates :vgrade_range_min, presence: true, numericality: { greater_than_or_equal_to: 0 }
@@ -50,4 +52,11 @@ class Boulder < ApplicationRecord
   validates :rating, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }, allow_nil: true
   validates :notes, length: { maximum: 400 }, allow_nil: true
   validates :boulder_type, inclusion: BOULDER_TYPES, allow_nil: true
+
+
+  private
+
+  def titleize_type
+    self.boulder_type = self.boulder_type.titleize
+  end
 end

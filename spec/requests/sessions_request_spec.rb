@@ -32,6 +32,22 @@ RSpec.describe SessionsController, type: :request do
             expect(result['notes']).to eq session.notes
         end
 
+        it 'includes warmup and non-warmup session climbs in the response' do
+            session = Session.last
+            b1 = create :boulder, boulder_type: 'indoor'
+            b2 = create :boulder, boulder_type: 'indoor'
+            create :session_climb, :warmup, session: session, user: user, boulder: b1
+            create :session_climb, session: session, user: user, boulder: b2, warmup: false
+
+            get "/sessions/#{session.id}", params: {  format: 'json' }
+            expect(response.status).to eq 200
+            result = JSON.parse(response.body)
+            expect(result.keys).to include 'warmup'
+            expect(result.keys).to include 'not_warmup'
+            expect(result['warmup'].first['warmup']).to eq true
+            expect(result['not_warmup'].first['warmup']).to eq false
+        end
+
         it 'returns not found if the session does not exist by id' do
             get "/sessions/-10"
             expect(response.status).to eq 404

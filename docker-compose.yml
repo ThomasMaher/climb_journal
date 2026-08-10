@@ -40,5 +40,29 @@ services:
       timeout: 10s
       retries: 5
 
+  web:
+    build:
+      context: ../climb_journal_web/climb-journal-web
+      dockerfile: Dockerfile.dev
+    container_name: climb-journal-web
+    ports:
+      - 5173:5173
+    volumes:
+      - /app/node_modules
+    develop:
+      watch:
+        - action: sync
+          path: ../climb_journal_web/climb-journal-web
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ../climb_journal_web/climb-journal-web/package.json
+    environment:
+      NODE_OPTIONS: --max-old-space-size=2048
+    depends_on:
+      rails:
+        condition: service_healthy
+
 volumes:
   postgres-data:

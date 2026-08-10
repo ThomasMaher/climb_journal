@@ -23,13 +23,6 @@ class BouldersController < ApplicationController
     end
   end
 
-  def destroy
-    boulder = Boulder.find(params[:id])
-
-    success = boulder.destroy ? true : false
-    render json: { success: success, status: success ? :ok : :unprocessable_entity }
-  end
-
 
   private
 

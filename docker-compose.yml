@@ -48,6 +48,7 @@ services:
     ports:
       - 5173:5173
     volumes:
+      - ../climb_journal_web/climb-journal-web:/app
       - /app/node_modules
     develop:
       watch:

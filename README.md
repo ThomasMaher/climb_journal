@@ -23,17 +23,13 @@ DATABASE_PW=your_password
 
 #### Installation
 
-Start PostgreSQL/Rails with Docker Compose:
+- Clone the repo for the UI: https://github.com/ThomasMaher/climb-journal-web
+- In this repo, the ./docker-compose.yml must have the correct location for your local UI repo
+  - After cloning the UI, update the path under web:build:context: to match the relative location of your local repo
+- run `docker compose up -d`
+- Verify that the container is running: `docker ps`
 
-`docker compose up -d`
-
-Verify that the container is running:
-
-`docker ps`
-
-Stop the database:
-
-`docker compose down`
+To stop the app run `docker compose down`
 
 #### Database Setup
 
@@ -45,16 +41,14 @@ Create the database (first time only):
 
 `docker compose run --rm -e RAILS_ENV=test rails bundle exec rspec`
 
-### Running the app
-
-The frontend app can be found at:
-(https://github.com/ThomasMaher/climb-journal-web)
-and can run locally with node.
-
 
 #### TODO:
 - ✅ Containerize the Rails application
-- ⏭️Containerize the React frontend
+- ✅Containerize the React frontend
 - ✅ Authentication
 - ✅ User accounts
+- ⏭ Host application
+- Allow for searching previously created boulders to add to your session 
 - Improved analytics and visualizations
+- Upload images of boulders
+- Boulders can have overall stats (number of climb attempts, number of sends) 

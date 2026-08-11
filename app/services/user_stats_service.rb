@@ -10,8 +10,9 @@ class UserStatsService
   delegate :boulders, to: :user
   delegate :session_climbs, to: :user
 
-  def run(days_ago: nil)
+  def run(days_ago: nil, warmup: false)
     @days_ago = days_ago
+    @warmup = warmup == true # Accounting for sql injection
     {
       total_sessions: total_sessions,
       highest_grade: highest_grade_sent,
@@ -33,17 +34,17 @@ class UserStatsService
   def highest_grade_sent
     return boulders
              .joins(:session_climbs)
-             .where("session_climbs.percent_finished = 100")
+             .where("session_climbs.percent_finished = 100 AND session_climbs.warmup = #{@warmup}")
              .maximum(:vgrade_range_max) unless @days_ago.present?
 
     @sessions
       .on_or_after(@days_ago)
-      .where("session_climbs.percent_finished = 100")
+      .where("session_climbs.percent_finished = 100 AND session_climbs.warmup = #{@warmup}")
       .maximum(:vgrade_range_max)
   end
 
   def avg_sent_grade
-    result = session_climbs.joins(:boulder, :session).where(percent_finished: 100)
+    result = session_climbs.joins(:boulder, :session).where(percent_finished: 100, warmup: @warmup)
     result = result.where("sessions.date >= ?", Time.zone.today - @days_ago.days) if @days_ago.present?
 
     result.pick(Arel.sql(
@@ -61,7 +62,7 @@ class UserStatsService
   end
 
   def sends_by_grade
-    result = @sessions.where("session_climbs.percent_finished = 100")
+    result = @sessions.where("session_climbs.percent_finished = 100 AND warmup = #{@warmup}")
     result = result.on_or_after(@days_ago) if @days_ago.present?
 
     result = result.group("boulders.vgrade_range_max").order("boulders.vgrade_range_max").count

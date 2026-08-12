@@ -1,5 +1,5 @@
 json.extract! @session, :id, :date, :gym_name, :notes
-[:warmup, :not_warmup].each do |warmup_type|
+[ :warmup, :not_warmup ].each do |warmup_type|
   json.set! warmup_type do
     json.array! @session.session_climbs.send(warmup_type).each do |sclimb|
       json.extract! sclimb, :id, :warmup, :attempts, :percent_finished, :notes

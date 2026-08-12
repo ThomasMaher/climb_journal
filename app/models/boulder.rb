@@ -57,6 +57,8 @@ class Boulder < ApplicationRecord
   private
 
   def titleize_type
+    return unless self.boulder_type.present?
+
     self.boulder_type = self.boulder_type.titleize
   end
 end

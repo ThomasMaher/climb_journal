@@ -32,6 +32,8 @@ class SessionClimb < ApplicationRecord
   scope :warmup, -> { where(warmup: true) }
   scope :not_warmup, -> { where(warmup: [false, nil]) }
 
+  attribute :warmup, default: false # Temp fix - actual fix is in migration file
+
   validates :attempts, numericality: { greater_than_or_equal_to: 0 }
   validates :percent_finished, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
   validates :notes, length: { maximum: 400 }, allow_nil: true

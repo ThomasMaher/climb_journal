@@ -38,6 +38,7 @@ services:
       interval: 60s
       timeout: 10s
       retries: 5
+    restart: unless-stopped
 
   web:
     build:
@@ -58,6 +59,7 @@ services:
     depends_on:
       rails:
         condition: service_healthy
+    restart: unless-stopped
 
 volumes:
   postgres-data:

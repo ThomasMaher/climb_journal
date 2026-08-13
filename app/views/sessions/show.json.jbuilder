@@ -3,7 +3,8 @@ json.extract! @session, :id, :date, :gym_name, :notes
   json.set! warmup_type do
     json.array! @session.session_climbs.send(warmup_type).each do |sclimb|
       json.extract! sclimb, :id, :warmup, :attempts, :percent_finished, :notes
-      json.extract! sclimb.boulder,
+      json.boulder_id sclimb&.boulder&.id
+      json.extract! sclimb&.boulder,
                     :vgrade_range_min,
                     :vgrade_range_max,
                     :self_grade,

@@ -53,8 +53,6 @@ production:
   primary: &primary_production
     <<: *default
     database: climb_journal_production
-    username: climb_journal
-    password: <%= ENV["CLIMB_JOURNAL_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
     database: climb_journal_production_cache

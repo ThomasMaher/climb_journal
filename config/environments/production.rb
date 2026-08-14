@@ -81,8 +81,8 @@ Rails.application.configure do
   # config.hosts << /.*\.up\.railway\.app/
   # config.hosts << "climbjournal-production-12d7.up.railway.app"
   # config.hosts << "healthcheck.railway.app"
-  config.hosts.clear
-  #
+  # config.hosts << ENV.fetch("RAILWAY_PUBLIC_DOMAIN")
+  config.host_authorization = false
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end

@@ -77,12 +77,8 @@ Rails.application.configure do
   config.active_record.attributes_for_inspect = [ :id ]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  # config.hosts = ["climbjournal-production-12d7.up.railway.app"]
-  # config.hosts << /.*\.up\.railway\.app/
-  # config.hosts << "climbjournal-production-12d7.up.railway.app"
-  # config.hosts << "healthcheck.railway.app"
-  # config.hosts << ENV.fetch("RAILWAY_PUBLIC_DOMAIN")
-  config.host_authorization = false
+  config.hosts << "climbjournal-production-12d7.up.railway.app"
+
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end

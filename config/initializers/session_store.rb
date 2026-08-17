@@ -1,1 +1,5 @@
-Rails.application.config.session_store :cookie_store, key: "_climb_journal_session",  expire_after: 2.hours
+Rails.application.config.session_store :cookie_store,
+                                       key: "_climb_journal_session",
+                                       expire_after: 2.hours,
+                                       same_site: :none,
+                                       secure: true

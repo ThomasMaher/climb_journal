@@ -9,7 +9,6 @@ class AuthController < ApplicationController
     user = User.find_by(username: user_params[:username])
 
     if user&.authenticate(user_params[:password_digest])
-      Rails.logger.debug("%%%%%%%%%%%%% Setting user: #{user.id}")
       session[:user_id] = user.id
       render json: user, status: :created
     else

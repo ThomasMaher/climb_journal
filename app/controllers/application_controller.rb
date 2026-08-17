@@ -6,6 +6,7 @@ class ApplicationController < ActionController::API
   helper_method :current_user
 
   def current_user
+    Rails.logger.debug("%%%%% Session user: #{session[:user_id]}")
     @current_user ||= User.find_by(id: session[:user_id])
   end
 

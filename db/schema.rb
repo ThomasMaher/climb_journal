@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_07_19_235947) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_13_031414) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -32,6 +32,24 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_19_235947) do
     t.index ["self_grade"], name: "index_boulders_on_self_grade"
     t.index ["vgrade_range_max"], name: "index_boulders_on_vgrade_range_max"
     t.index ["vgrade_range_min"], name: "index_boulders_on_vgrade_range_min"
+  end
+
+  create_table "health_checks", force: :cascade do |t|
+    t.integer "session_id", null: false
+    t.integer "session_length"
+    t.integer "overall_assessment"
+    t.integer "finger_assessment"
+    t.integer "back_assessment"
+    t.integer "arms_assessment"
+    t.integer "lower_body_assessment"
+    t.text "notes"
+    t.index ["arms_assessment"], name: "index_health_checks_on_arms_assessment"
+    t.index ["back_assessment"], name: "index_health_checks_on_back_assessment"
+    t.index ["finger_assessment"], name: "index_health_checks_on_finger_assessment"
+    t.index ["lower_body_assessment"], name: "index_health_checks_on_lower_body_assessment"
+    t.index ["overall_assessment"], name: "index_health_checks_on_overall_assessment"
+    t.index ["session_id"], name: "index_health_checks_on_session_id"
+    t.index ["session_length"], name: "index_health_checks_on_session_length"
   end
 
   create_table "session_climbs", force: :cascade do |t|

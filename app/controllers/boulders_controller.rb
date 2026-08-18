@@ -17,7 +17,8 @@ class BouldersController < ApplicationController
 
     if @boulder.save
       set_session_climb
-      render :show, status: :created
+      render json: @boulder and return unless @session_climb&.id.present?
+      redirect_to session_climb_path(@session_climb.id)
     else
       render json: { errors: @boulder.errors.as_json(full_messages: true) }, status: :unprocessable_entity
     end

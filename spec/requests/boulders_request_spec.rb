@@ -36,7 +36,7 @@ RSpec.describe BouldersController, type: :request do
         indoor: true
       }, format: :json }
 
-      expect(response.status).to eq 201
+      expect(response.status).to eq 200
       expect(JSON.parse(response.body)['vgrade_range_min']).to eq 2
       expect(JSON.parse(response.body)['vgrade_range_max']).to eq 3
     end
@@ -58,7 +58,7 @@ RSpec.describe BouldersController, type: :request do
       boulder = Boulder.last
       session_climb = SessionClimb.last
 
-      expect(response.status).to eq 201
+      expect(response.status).to eq 302
       expect(JSON.parse(response.body)['vgrade_range_min']).to eq 2
       expect(JSON.parse(response.body)['vgrade_range_max']).to eq 3
       expect(session_climb.boulder_id).to eq boulder.id

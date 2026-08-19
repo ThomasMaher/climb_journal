@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get "/user_status", to: "auth#user_status"
 
   resources :users, only: %i[ create ]
-  resource "home_stats", controller: :users, action: :home_stats
+  get "/home_stats", controller: :users, action: :home_stats
 
   resources :boulders, only: %i[ index show create ] do
     get "/user_boulder_data", action: :user_boulder_data

@@ -1,13 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
-  before do
-    user = create :user, password: 'password'
-    post '/login', params: { user: { username: user.username, password_digest: 'password' } }
+  describe '#create' do
+    it 'creates a new user and sets the session' do
+      post '/users', params: { user: {
+        username: 'Toby',
+        password_digest: 'secret',
+        first_name: 'Toby',
+        last_name: 'Roberts'
+      }, format: :json }
+
+      expect(response.status).to eq 201
+      expect(session[:user_id]).to be
+    end
   end
-  let(:user) { User.last }
 
   describe '#home_stats' do
+    before do
+      user = create :user, password: 'password'
+      post '/login', params: { user: { username: user.username, password_digest: 'password' } }
+    end
+    let(:user) { User.last }
+
     # This is more of a feature test and doesn't belong here - need to find the right place for this test
     it 'produces expected stats for user' do
       session1 = Session.create(user: user, gym_name: 'Vital', date: Time.zone.today - 31.days)

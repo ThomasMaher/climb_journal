@@ -24,6 +24,14 @@ class BouldersController < ApplicationController
     end
   end
 
+  def user_boulder_data
+    boulder = Boulder.find(params[:boulder_id])
+    render :json, status: :not_found and return unless boulder.present?
+
+    service = UserBoulderDataService.new(boulder.id, current_user.id)
+    render json: service.run
+  end
+
 
   private
 

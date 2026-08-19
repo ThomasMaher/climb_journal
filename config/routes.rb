@@ -15,7 +15,9 @@ Rails.application.routes.draw do
   resources :users, only: %i[ create ]
   resource "home_stats", controller: :users, action: :home_stats
 
-  resources :boulders, only: %i[ index show create ]
+  resources :boulders, only: %i[ index show create ] do
+    get "/user_boulder_data", action: :user_boulder_data
+  end
   resources :sessions, only: %i[ index show create destroy ] do
     get "session_stats", controller: :sessions, action: :session_stats
   end

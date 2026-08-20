@@ -43,6 +43,7 @@ class UserStatsService
       .maximum(:vgrade_range_max)
   end
 
+  # TODO: test
   def avg_sent_grade
     result = session_climbs.joins(:boulder, :session).where(percent_finished: 100, warmup: @warmup)
     result = result.where("sessions.date >= ?", Time.zone.today - @days_ago.days) if @days_ago.present?
@@ -52,6 +53,7 @@ class UserStatsService
     ))
   end
 
+  # TODO: test
   def most_frequented_gym
     return nil unless sessions.any?
     result = sessions.group(:gym_name).order(Arel.sql("COUNT(*) DESC"))
@@ -61,6 +63,7 @@ class UserStatsService
     result.present? ? result.first[0] : ""
   end
 
+  # TODO: test
   def sends_by_grade
     result = @sessions.where("session_climbs.percent_finished = 100 AND warmup = ?", @warmup)
     result = result.on_or_after(@days_ago) if @days_ago.present?

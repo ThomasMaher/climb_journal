@@ -24,6 +24,7 @@ class SessionsController < ApplicationController
     def destroy
         session = Session.find_by(id: params[:id])
         render status: :not_found and return unless session.present?
+        render status: :unauthorized and return unless session.user_id == current_user.id
 
         success = session.destroy ? true : false
         render json: { success: success }, status: success ? :ok : :unprocessable_entity

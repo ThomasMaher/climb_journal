@@ -5,6 +5,7 @@ class BouldersController < ApplicationController
 
   def show
     boulder = Boulder.find(params[:id])
+    render json: {}, status: :not_found and return unless boulder.present?
 
     render json: boulder
   end
@@ -46,6 +47,7 @@ class BouldersController < ApplicationController
       :boulder_type,
       :incline,
       :nickname,
+      :created_by_id,
       session_climbs_attributes: [
         :session_id,
         :user_id,

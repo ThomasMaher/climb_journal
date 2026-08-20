@@ -34,12 +34,12 @@ class UserStatsService
   def highest_grade_sent
     return boulders
              .joins(:session_climbs)
-             .where("session_climbs.percent_finished = 100 AND session_climbs.warmup = #{@warmup}")
+             .where("session_climbs.percent_finished = 100 AND session_climbs.warmup = ?", @warmup)
              .maximum(:vgrade_range_max) unless @days_ago.present?
 
     @sessions
       .on_or_after(@days_ago)
-      .where("session_climbs.percent_finished = 100 AND session_climbs.warmup = #{@warmup}")
+      .where("session_climbs.percent_finished = 100 AND session_climbs.warmup = ?", @warmup)
       .maximum(:vgrade_range_max)
   end
 
@@ -62,7 +62,7 @@ class UserStatsService
   end
 
   def sends_by_grade
-    result = @sessions.where("session_climbs.percent_finished = 100 AND warmup = #{@warmup}")
+    result = @sessions.where("session_climbs.percent_finished = 100 AND warmup = ?", @warmup)
     result = result.on_or_after(@days_ago) if @days_ago.present?
 
     result = result.group("boulders.vgrade_range_max").order("boulders.vgrade_range_max").count

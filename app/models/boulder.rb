@@ -13,10 +13,12 @@
 #  nickname         :string(50)
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  created_by_id    :integer
 #
 # Indexes
 #
 #  index_boulders_on_boulder_type      (boulder_type)
+#  index_boulders_on_created_by_id     (created_by_id)
 #  index_boulders_on_incline           (incline)
 #  index_boulders_on_nickname          (nickname)
 #  index_boulders_on_rating            (rating)
@@ -28,6 +30,7 @@
 class Boulder < ApplicationRecord
   BOULDER_TYPES = [ "Indoor", "Outdoor", "Kilter Board" ].freeze
 
+  belongs_to :created_by, class_name: "User", foreign_key: :created_by_id, optional: true
   has_many :session_climbs
 
   before_validation :titleize_type
@@ -47,11 +50,11 @@ class Boulder < ApplicationRecord
   validates :nickname,
             presence: true,
             length: { maximum: 50 },
-            # uniqueness: { scope: :user_id } Eventually, boulders belong to a user
-            allow_nil: true
+            uniqueness: { scope: :created_by_id, message: "Each boulder you create must have a unique name." }
   validates :rating, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }, allow_nil: true
   validates :notes, length: { maximum: 400 }, allow_nil: true
   validates :boulder_type, inclusion: BOULDER_TYPES, allow_nil: true
+  validates :created_by_id, presence: { message: "must have a creator." }
 
 
   private

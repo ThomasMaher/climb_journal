@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   has_many :sessions, dependent: :destroy
   has_many :session_climbs, dependent: :destroy
   has_many :boulders, through: :session_climbs
+  has_many :created_boulders, foreign_key: :created_by_id, class_name: 'Boulder'
 
   validates :username, presence: true, uniqueness: true
 end

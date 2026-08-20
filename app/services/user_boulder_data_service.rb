@@ -9,7 +9,7 @@ class UserBoulderDataService
       current_progress: current_progress,
       total_attempts: total_attempts,
       date_completed: date_completed,
-      last_data_climbed: last_date_climbed
+      last_date_climbed: last_date_climbed
     }
   end
 

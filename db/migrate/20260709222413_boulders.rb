@@ -12,8 +12,6 @@ class Boulders < ActiveRecord::Migration[8.0]
       t.string :boulder_type, index: true, null: true
       t.string :nickname, limit: 50, index: true, null: true
 
-      t.integer :created_by_id, null: false, index: true
-
       t.timestamps
     end
   end

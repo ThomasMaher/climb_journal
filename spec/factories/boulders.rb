@@ -13,10 +13,12 @@
 #  nickname         :string(50)
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  created_by_id    :integer
 #
 # Indexes
 #
 #  index_boulders_on_boulder_type      (boulder_type)
+#  index_boulders_on_created_by_id     (created_by_id)
 #  index_boulders_on_incline           (incline)
 #  index_boulders_on_nickname          (nickname)
 #  index_boulders_on_rating            (rating)

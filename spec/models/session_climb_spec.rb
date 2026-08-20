@@ -35,7 +35,8 @@ RSpec.describe SessionClimb, type: :model do
         vgrade_range_max: 3,
         self_grade: 3,
         boulder_type: 'Indoor',
-        nickname: 'Tracy'
+        nickname: 'Tracy',
+        created_by_id: user.id
       )
 
       session = SessionClimb.new(session_id: session.id, boulder_id: boulder.id, user_id: user.id)
@@ -55,7 +56,8 @@ RSpec.describe SessionClimb, type: :model do
         vgrade_range_max: 3,
         self_grade: 3,
         boulder_type: 'Indoor',
-        nickname: 'Tracy'
+        nickname: 'Tracy',
+        created_by_id: user.id
       )
 
       SessionClimb.create(session_id: session.id, boulder_id: boulder.id, user_id: user.id)

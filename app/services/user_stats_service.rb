@@ -12,7 +12,7 @@ class UserStatsService
 
   def run(days_ago: nil, warmup: false)
     @days_ago = days_ago
-    @warmup = warmup == true # Accounting for sql injection
+    @warmup = warmup
     {
       total_sessions: total_sessions,
       highest_grade: highest_grade_sent,

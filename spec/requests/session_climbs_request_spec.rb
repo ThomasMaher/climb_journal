@@ -5,7 +5,7 @@ RSpec.describe SessionClimbsController, type: :request do
     create :user, username: 'meichi', password: 'narasaki'
     user = create :user, username: 'tomoa', password: 'narasaki'
     session = create :session, user_id: user.id
-    boulder = create :boulder, nickname: 'boulderboy'
+    boulder = create :boulder, nickname: 'boulderboy', created_by_id: user.id
     create :session_climb, user: user, session: session, boulder: boulder
   end
   let(:session_climb) { SessionClimb.last }

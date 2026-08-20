@@ -5,7 +5,13 @@ RSpec.describe 'UserStatsService' do
     user = create :user
     session1 = Session.create(gym_name: 'GP81', date: Time.zone.today - 1.day, user_id: user.id)
     session2 = Session.create(gym_name: 'Vital', date: Time.zone.today - 31.days, user_id: user.id)
-    b = Boulder.create(vgrade_range_min: 14, vgrade_range_max: 15)
+    b = create(
+          :boulder,
+          vgrade_range_min: 14,
+          vgrade_range_max: 15,
+          created_by_id: user.id,
+          nickname: 'test1'
+    )
     SessionClimb.create(
       user_id: user.id,
       session_id: session1.id,
@@ -14,7 +20,13 @@ RSpec.describe 'UserStatsService' do
       attempts: 1
     )
 
-    b2 = Boulder.create(vgrade_range_min: 16, vgrade_range_max: 17)
+    b2 = create(
+          :boulder,
+          vgrade_range_min: 16,
+          vgrade_range_max: 17,
+          created_by_id: user.id,
+          nickname: 'test2'
+    )
     SessionClimb.create(
       user_id: user.id,
       session_id: session2.id,
@@ -23,7 +35,13 @@ RSpec.describe 'UserStatsService' do
       attempts: 1
     )
 
-    b3 = Boulder.create(vgrade_range_min: 16, vgrade_range_max: 17)
+    b3 = create(
+          :boulder,
+          vgrade_range_min: 16,
+          vgrade_range_max: 17,
+          created_by_id: user.id,
+          nickname: 'test3'
+    )
     SessionClimb.create(
       user_id: user.id,
       session_id: session1.id,

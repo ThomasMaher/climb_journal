@@ -36,7 +36,8 @@ RSpec.describe 'Users', type: :request do
         self_grade: 8,
         incline: 10,
         boulder_type: 'Indoor',
-        nickname: 'burp'
+        nickname: 'burp',
+        created_by_id: user.id
       )
       boulder2 = Boulder.create(
         vgrade_range_min: 5,
@@ -44,7 +45,8 @@ RSpec.describe 'Users', type: :request do
         self_grade: 5,
         incline: 30,
         boulder_type: 'Indoor',
-        nickname: 'hiccup'
+        nickname: 'hiccup',
+        created_by_id: user.id
       )
       SessionClimb.create(session_id: session1.id, user_id: user.id, boulder_id: boulder1.id, attempts: 1, percent_finished: 100)
       SessionClimb.create(session_id: session1.id, user_id: user.id, boulder_id: boulder2.id, attempts: 10, percent_finished: 80)

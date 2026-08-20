@@ -37,6 +37,7 @@ class Boulder < ApplicationRecord
 
   accepts_nested_attributes_for :session_climbs
 
+  # TODO: test these
   validates :vgrade_range_min, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :vgrade_range_max,
             presence: true,

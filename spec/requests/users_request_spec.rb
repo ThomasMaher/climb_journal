@@ -5,7 +5,7 @@ RSpec.describe 'Users', type: :request do
     it 'creates a new user and sets the session' do
       post '/users', params: { user: {
         username: 'Toby',
-        password_digest: 'secret',
+        password: 'secret',
         first_name: 'Toby',
         last_name: 'Roberts'
       }, format: :json }
@@ -16,14 +16,18 @@ RSpec.describe 'Users', type: :request do
   end
 
   describe '#home_stats' do
-    before do
-      user = create :user, password: 'password'
-      post '/login', params: { user: { username: user.username, password_digest: 'password' } }
+    it 'returns 401 if user not logged in' do
+      create :user, password: 'password'
+
+      get "/home_stats", params: { format: :json }
+      expect(response.status).to eq 401
     end
-    let(:user) { User.last }
 
     # This is more of a feature test and doesn't belong here - need to find the right place for this test
     it 'produces expected stats for user' do
+      user = create :user, password: 'password'
+      post '/login', params: { user: { username: user.username, password: 'password' } }
+
       session1 = Session.create(user: user, gym_name: 'Vital', date: Time.zone.today - 31.days)
       session2 = Session.create(user: user, gym_name: 'Vital', date: Time.zone.today - 10.days)
       boulder1 = Boulder.create(

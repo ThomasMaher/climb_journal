@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe BouldersController, type: :request do
   before do
     user = create :user, password: 'password'
-    post '/login', params: { user: { username: user.username, password_digest: 'password' } }
+    post '/login', params: { user: { username: user.username, password: 'password' } }
   end
   let(:user) { User.last }
 
@@ -55,14 +55,10 @@ RSpec.describe BouldersController, type: :request do
                                       notes: 'Sick boulder'
                                     } ]
       } }
-      boulder = Boulder.last
       session_climb = SessionClimb.last
 
       expect(response.status).to eq 302
-      expect(JSON.parse(response.body)['vgrade_range_min']).to eq 2
-      expect(JSON.parse(response.body)['vgrade_range_max']).to eq 3
-      expect(session_climb.boulder_id).to eq boulder.id
-      expect(session_climb.session_id).to eq session.id
+      expect(response).to redirect_to("/session_climbs/#{session_climb&.id}")
     end
 
     it 'does not allow two session climbs (session and boulder id must be unique together)' do

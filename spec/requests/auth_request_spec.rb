@@ -25,7 +25,7 @@ RSpec.describe AuthController, type: :request do
   describe '#create' do
     it 'authenticates user and starts a session' do
       post '/login', params: {
-        user: { username: 'Toby', password_digest: 'secret' },
+        user: { username: 'Toby', password: 'secret' },
         format: :json
       }
 
@@ -35,7 +35,7 @@ RSpec.describe AuthController, type: :request do
     end
 
     it 'returns an error if password and username do not match' do
-      post '/login', params: { user: { username: 'Toby', password_digest: '123' } }
+      post '/login', params: { user: { username: 'Toby', password: '123' } }
 
       expect(response.status).to eq 401
       expect(session[:user_id]).to be nil
@@ -45,7 +45,7 @@ RSpec.describe AuthController, type: :request do
 
   describe '#destroy' do
     it 'ends the session' do
-      post '/login', params: { user: { username: 'Toby', password_digest: 'secret' } }
+      post '/login', params: { user: { username: 'Toby', password: 'secret' } }
 
       expect(response.status).to eq 201
       expect(session[:user_id]).to eq toby.id

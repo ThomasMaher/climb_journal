@@ -109,7 +109,6 @@ RSpec.describe BouldersController, type: :request do
       expect(errors['vgrade_range_max']).to include('Vgrade range max must be greater than or equal to vgrade range minimum')
       expect(errors['nickname']).to include('Nickname is too long (maximum is 50 characters)')
       expect(errors['self_grade']).to include('Self grade must be greater than or equal to 0')
-      expect(errors['rating']).to include('Rating must be greater than or equal to 1')
       expect(errors['notes']).to include('Notes is too long (maximum is 400 characters)')
       expect(errors['boulder_type']).to include('Boulder type is not included in the list')
       expect(errors['created_by_id'][0]).to include('must have a creator')

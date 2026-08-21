@@ -14,7 +14,7 @@ class BouldersController < ApplicationController
     render json: {
       errors: [ "Only one session climb allowed per session" ]
     }, status: :unprocessable_entity and return unless params_valid?
-    @boulder = Boulder.new(boulder_params)
+    @boulder = Boulder.new(boulder_params.merge({ rating: 1 }))
 
     if @boulder.save
       set_session_climb
@@ -42,7 +42,6 @@ class BouldersController < ApplicationController
       :vgrade_range_min,
       :vgrade_range_max,
       :self_grade,
-      :rating,
       :notes,
       :boulder_type,
       :incline,

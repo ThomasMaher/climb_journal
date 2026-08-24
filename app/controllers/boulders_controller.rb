@@ -46,6 +46,14 @@ class BouldersController < ApplicationController
     render json: service.run
   end
 
+  def sessions
+    @boulder = Boulder.find(params[:id])
+    render json: {}, status: :not_found and return unless @boulder.present?
+    render json: {}, status: :unauthorized and return unless @boulder.created_by_id == current_user.id
+
+    render :sessions
+  end
+
 
   private
 

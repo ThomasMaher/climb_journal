@@ -42,23 +42,23 @@ services:
 
   web:
     build:
-      context: ../climb_journal_web/climb-journal-web
+      context: ${FRONTEND_APP_PATH}
       dockerfile: Dockerfile.dev
     container_name: climb-journal-web
     ports:
       - 5173:5173
     volumes:
-      - ../climb_journal_web/climb-journal-web:/app
+      - ${FRONTEND_APP_PATH}:/app
       - /app/node_modules
     develop:
       watch:
         - action: sync
-          path: ../climb_journal_web/climb-journal-web
+          path: ${FRONTEND_APP_PATH}
           target: /app
           ignore:
             - node_modules/
         - action: rebuild
-          path: ../climb_journal_web/climb-journal-web/package.json
+          path: ${FRONTEND_APP_PATH}/package.json
     environment:
       NODE_OPTIONS: --max-old-space-size=2048
     depends_on:

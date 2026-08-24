@@ -60,7 +60,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_20_203328) do
     t.integer "user_id", null: false
     t.integer "attempts"
     t.integer "percent_finished", null: false
-    t.boolean "warmup"
+    t.boolean "warmup", default: false
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

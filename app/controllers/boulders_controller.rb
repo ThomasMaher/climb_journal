@@ -26,6 +26,18 @@ class BouldersController < ApplicationController
     end
   end
 
+  def update
+    @boulder = Boulder.find(params[:id])
+    render json: {}, status: :not_found and return unless @boulder.present?
+    render json: {}, status: :unauthorized and return unless @boulder.created_by_id == current_user.id
+
+    if @boulder.update(boulder_params)
+      render json: @boulder
+    else
+      render json: { errors: @boulder.errors.as_json(full_messages: true) }, status: :unprocessable_entity
+    end
+  end
+
   def user_boulder_data
     boulder = Boulder.find(params[:boulder_id])
     render :json, status: :not_found and return unless boulder.present?

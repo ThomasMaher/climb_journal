@@ -45,6 +45,7 @@ class SessionClimb < ApplicationRecord
   before_validation :set_initial_state
 
   delegate :vgrade_range_max, to: :boulder
+  delegate :date, to: :session
 
 
   private

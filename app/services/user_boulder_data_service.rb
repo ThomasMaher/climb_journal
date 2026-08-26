@@ -33,17 +33,14 @@ class UserBoulderDataService
 
     @session_climbs
              .joins(:session)
-             .select(:date)
              .sent
-             .order("sessions.date DESC")
-             .first
+             .order("sessions.date ASC").first
              &.date
   end
 
   def last_date_climbed
     @session_climbs
       .joins(:session)
-      .select(:date)
       .order("sessions.date DESC")
       .first
       &.date

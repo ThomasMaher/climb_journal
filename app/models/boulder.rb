@@ -57,6 +57,12 @@ class Boulder < ApplicationRecord
   validates :boulder_type, inclusion: BOULDER_TYPES, allow_nil: true
   validates :created_by_id, presence: { message: "must have a creator." }
 
+  scope :with_nickname, ->(nickname) { where("nickname ILIKE ?", "%#{sanitize_sql_like(nickname)}%") }
+  scope :with_grade_range, ->(min_grade, max_grade) {
+    where("vgrade_range_min >= ? AND vgrade_range_max <= ?", min_grade, max_grade)
+  }
+  scope :with_type, ->(type) { where(boulder_type: type) }
+
 
   private
 

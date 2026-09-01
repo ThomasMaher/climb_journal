@@ -1,3 +1,3 @@
 @boulders.each do |boulder|
-  render 'boulder', locals: { boulder: boulder }
+  render "boulder", locals: { boulder: boulder }
 end

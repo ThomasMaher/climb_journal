@@ -1,7 +1,6 @@
 class BouldersController < ApplicationController
   def index
     search_service = BoulderSearchService.new(params)
-    render json: { errors: search_service.errors }, status: :bad_request and return unless search_service.valid?
 
     @boulders = search_service.results
     render :index

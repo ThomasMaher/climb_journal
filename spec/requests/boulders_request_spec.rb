@@ -179,4 +179,56 @@ RSpec.describe BouldersController, type: :request do
       expect(results[:last_date_climbed].to_s).to eq (Time.zone.now - 1.days).to_date.to_s
     end
   end
+
+  describe '#index' do
+    before do
+      user = create :user, username: 'Erin'
+      create(
+        :boulder,
+        nickname: 'slab 1',
+        vgrade_range_min: 10,
+        vgrade_range_max: 11,
+        created_by_id: user.id,
+        boulder_type: 'Outdoor'
+      )
+      create(
+        :boulder,
+        nickname: 'slab 2',
+        vgrade_range_min: 7,
+        vgrade_range_max: 7,
+        created_by_id: user.id,
+        boulder_type: 'Kilter Board'
+      )
+      create(
+        :boulder,
+        nickname: 'Slopers and crimps',
+        vgrade_range_min: 7,
+        vgrade_range_max: 7,
+        created_by_id: user.id
+      )
+    end
+
+    it 'returns a list of boulders' do
+      boulders = Boulder.all.sort_by(&:id).map(&:nickname)
+
+      get '/boulders', params: { format: 'json' }
+
+      results = JSON.parse(response.body, symbolize_names: true).sort_by do |boulder|
+        boulder[:boulder_id]
+      end.map { |boulder| boulder[:nickname] }
+      expect(results).to eq boulders
+    end
+
+    it 'returns a list of filtered boulders' do
+      get '/boulders', params: {
+        format: 'json',
+        nickname: 'sl',
+        grade: 7,
+        boulder_type: 'Kilter Board'
+      }
+
+      result = JSON.parse(response.body, symbolize_names: true)[0]
+      expect(result[:nickname]).to eq 'slab 2'
+    end
+  end
 end

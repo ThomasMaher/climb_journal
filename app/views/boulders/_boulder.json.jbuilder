@@ -7,4 +7,5 @@ json.extract! boulder,
               :rating,
               :notes,
               :boulder_type,
-              :nickname
+              :nickname,
+              :created_by_id

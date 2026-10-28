@@ -47,8 +47,8 @@ Create the database (first time only):
 - ✅Containerize the React frontend
 - ✅ Authentication
 - ✅ User accounts
-- ⏭ Host application
-- Allow for searching previously created boulders to add to your session 
+- ✅ Host application
+- ⏭ Allow for searching previously created boulders to add to your session 
 - Improved analytics and visualizations
 - Upload images of boulders
 - Boulders can have overall stats (number of climb attempts, number of sends) 

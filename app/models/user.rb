@@ -20,4 +20,5 @@ class User < ActiveRecord::Base
   has_many :created_boulders, foreign_key: :created_by_id, class_name: "Boulder"
 
   validates :username, presence: true, uniqueness: true
+  validates :password_digest, presence: true, length: { minimum: 6 }
 end

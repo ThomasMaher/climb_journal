@@ -63,6 +63,9 @@ class Boulder < ApplicationRecord
   }
   scope :with_type, ->(type) { where(boulder_type: type) }
 
+  def creator_name
+    created_by.username
+  end
 
   private
 

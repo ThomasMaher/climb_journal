@@ -9,3 +9,4 @@ json.extract! boulder,
               :boulder_type,
               :nickname,
               :created_by_id
+              json.creator_name boulder.creator_name

@@ -56,3 +56,5 @@ end
 group :test do
   gem "factory_bot_rails"
 end
+
+gem "aws-sdk-s3", "~> 1.242"

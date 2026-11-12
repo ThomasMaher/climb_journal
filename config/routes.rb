@@ -22,5 +22,5 @@ Rails.application.routes.draw do
   resources :sessions, only: %i[ index show create destroy ] do
     get "session_stats", controller: :sessions, action: :session_stats
   end
-  resources :session_climbs, only: %i[ show destroy ]
+  resources :session_climbs, only: %i[ show destroy create ]
 end

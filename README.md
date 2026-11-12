@@ -44,11 +44,11 @@ Create the database (first time only):
 
 #### TODO:
 - ✅ Containerize the Rails application
-- ✅Containerize the React frontend
+- ✅ Containerize the React frontend
 - ✅ Authentication
 - ✅ User accounts
 - ✅ Host application
-- ⏭ Allow for searching previously created boulders to add to your session 
+- ✅ Allow for searching previously created boulders to add to your session 
 - Improved analytics and visualizations
-- Upload images of boulders
+- ⏭ Upload images of boulders
 - Boulders can have overall stats (number of climb attempts, number of sends) 

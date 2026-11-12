@@ -27,7 +27,7 @@ class BoulderPhoto < ApplicationRecord
   validates :image,
             attached: true,
             content_type: {
-              in: ['image/png', 'image/jpg', 'image/jpeg', 'image/webp'],
+              in: ['image/png', 'image/jpeg', 'image/webp'],
               spoofing_protection: true
             },
             size: { less_than_or_equal_to: 10.megabytes }

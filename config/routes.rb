@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :boulders, only: %i[ show index create update ] do
     get "/user_boulder_data", action: :user_boulder_data
     get "/sessions", action: :sessions, on: :member
+    resources :boulder_photos, only: :create
   end
   resources :sessions, only: %i[ index show create destroy ] do
     get "session_stats", controller: :sessions, action: :session_stats

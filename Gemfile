@@ -58,3 +58,5 @@ group :test do
 end
 
 gem "aws-sdk-s3", "~> 1.242"
+
+gem "active_storage_validations", "~> 4.1"

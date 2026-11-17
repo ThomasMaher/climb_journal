@@ -2,9 +2,9 @@
 
 class BoulderPhotosController < ApplicationController
   def create
-    @boulder = Boulder.find(params.require(:boulder_id)[:boulder_id])
+    @boulder = Boulder.find(params[:boulder_id])
     render json: { error: "No boulder with that id" }, status: :not_found and return unless @boulder.present?
-    render json: { error: "You are not authorized to add images to this boulder" }, status: :unauthorized and return unless current_user == @boulder.user
+    render json: { error: "You are not authorized to add images to this boulder" }, status: :unauthorized and return unless current_user == @boulder.created_by
 
     @boulder_photo = BoulderPhoto.new(
       boulder: @boulder,

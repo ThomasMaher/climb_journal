@@ -32,6 +32,7 @@ class Boulder < ApplicationRecord
 
   belongs_to :created_by, class_name: "User", foreign_key: :created_by_id, optional: true
   has_many :session_climbs
+  has_many :boulder_photos
 
   before_validation :titleize_type
 

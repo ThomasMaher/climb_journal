@@ -24,7 +24,7 @@ class BoulderPhotosController < ApplicationController
         image_url: rails_blob_url(
           @boulder_photo.image,
           host: request.host_with_port,
-          protocol: 'http'
+          protocol: "http"
         )
       ), status: :created
     else

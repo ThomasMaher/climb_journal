@@ -4,7 +4,7 @@ json.array! @boulder.boulder_photos.each do |photo|
   json.image_url rails_blob_url(
     photo.image,
     host: request.host_with_port,
-    protocol: 'http'
+    protocol: "http"
   )
   json.editable @editable
 end

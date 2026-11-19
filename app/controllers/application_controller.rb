@@ -6,10 +6,12 @@ class ApplicationController < ActionController::API
   helper_method :current_user
 
   def current_user
+    Rails.logger.debug("SESSION ID: #{session[:user_id]}")
     @current_user ||= User.find_by(id: session[:user_id])
   end
 
   def authenticate_user!
+    Rails.logger.debug("CURRENT USER: #{current_user}")
     head :unauthorized unless current_user
   end
 

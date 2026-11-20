@@ -30,7 +30,7 @@ class BoulderPhoto < ApplicationRecord
               in: [ "image/png", "image/jpeg", "image/webp" ],
               spoofing_protection: true
             },
-            size: { less_than_or_equal_to: 10.megabytes }
+            size: { less_than_or_equal_to: 5.megabytes }
   validate :count_per_boulder
 
 
@@ -40,6 +40,6 @@ class BoulderPhoto < ApplicationRecord
     images_for_boulder = BoulderPhoto.where(boulder_id: boulder_id, user_id: user_id).count
     return if images_for_boulder < IMAGE_MAX
 
-    errors.add(:boulder_id, "Max of #{IMAGE_MAX} images allowed.")
+    errors.add(:base, "Max of #{IMAGE_MAX} images allowed.")
   end
 end

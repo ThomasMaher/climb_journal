@@ -2,16 +2,11 @@
 
 class BoulderPhotosController < ApplicationController
   before_action :get_boulder
+  before_action :authorize_user, except: :index
 
-  def index
-    @editable = current_user == @boulder.created_by
-  end
+  def index; end
 
   def create
-    @boulder = Boulder.find(params[:boulder_id])
-    render json: { error: "No boulder with that id" }, status: :not_found and return unless @boulder.present?
-    render json: { error: "You are not authorized to add images to this boulder" }, status: :unauthorized and return unless current_user == @boulder.created_by
-
     @boulder_photo = BoulderPhoto.new(
       boulder: @boulder,
       user: current_user,
@@ -40,7 +35,13 @@ class BoulderPhotosController < ApplicationController
   end
 
   def get_boulder
-    @boulder = Boulder.find(params[:boulder_id])
+    @boulder = Boulder.find_by(id: params[:boulder_id])
     render json: { error: "No boulder with that id" }, status: :not_found and return unless @boulder.present?
+  end
+
+  def authorize_user
+    render json: {
+        error: "You are not authorized to add images to this boulder"
+      }, status: :unauthorized and return unless current_user == @boulder.created_by
   end
 end

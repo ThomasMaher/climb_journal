@@ -6,5 +6,4 @@ json.array! @boulder.boulder_photos.each do |photo|
     host: request.host_with_port,
     protocol: "http"
   )
-  json.editable @editable
 end
